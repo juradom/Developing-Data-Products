@@ -1,0 +1,9 @@
+name: Test_App
+account: mjurado
+server: shinyapps.io
+appId: 60025
+bundleId: 265416
+url: https://mjurado.shinyapps.io/Test_App
+when: 1442281781.00905
+asMultiple: FALSE
+asStatic: FALSE
