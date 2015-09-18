@@ -1,29 +1,20 @@
 library(shiny)
-library(ggplot2)
+library(datasets)
+library(googleVis)
 
-dataset <- diamonds
-
-fluidPage(
-    
-    titlePanel("Diamonds Explorer"),
-    
-    sidebarPanel(
-        
-        sliderInput('sampleSize', 'Sample Size', min=1, max=nrow(dataset),
-                    value=min(1000, nrow(dataset)), step=500, round=0),
-        
-        selectInput('x', 'X', names(dataset)),
-        selectInput('y', 'Y', names(dataset), names(dataset)[[2]]),
-        selectInput('color', 'Color', c('None', names(dataset))),
-        
-        checkboxInput('jitter', 'Jitter'),
-        checkboxInput('smooth', 'Smooth'),
-        
-        selectInput('facet_row', 'Facet Row', c(None='.', names(dataset))),
-        selectInput('facet_col', 'Facet Column', c(None='.', names(dataset)))
-    ),
-    
-    mainPanel(
-        plotOutput('plot')
+states <- data.frame(state.name, state.x77)
+stateAttr <- sort(names(states),decreasing = FALSE)
+shinyUI(fluidPage(titlePanel(h1(
+    "1977 U.S. Census Data"
+)),
+fluidRow(column(
+    3,
+    selectInput(
+        "selectAttr", label = h6("Please select an attribute:"),
+        c(stateAttr)
     )
+)),
+mainPanel(
+    htmlOutput("view")
 )
+))
