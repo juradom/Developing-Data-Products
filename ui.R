@@ -25,7 +25,7 @@ budgetPivot <- cast(budget,Country ~ CommodityName)
 
 # create UI
 shinyUI(fluidPage(theme = shinytheme("cerulean"),
-    titlePanel(verbatimTextOutput("dynamicTitle")),
+    titlePanel(h3("Percent Of Total Expenditures By Commodity")),
     sidebarLayout(position = "left",
     sidebarPanel(
         radioButtons("selectCategory", label = "Select a commodity category:",
@@ -34,7 +34,9 @@ shinyUI(fluidPage(theme = shinytheme("cerulean"),
                      ),decreasing = FALSE)) 
     )
     ,
-    mainPanel(fluidRow(
+    mainPanel(
+        fluidRow(verbatimTextOutput("dynamicTitle")),
+        fluidRow(
         box( htmlOutput("view"), width = 10)
     ),
     fluidRow(box(helpText(a("Source: USDA.GOV ", href="http://www.ers.usda.gov/publications/tb-technical-bulletin/tb1925.aspx", width=10)))
