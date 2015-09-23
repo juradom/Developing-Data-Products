@@ -3,6 +3,7 @@ library(shiny)
 library(shinydashboard)
 library(googleVis)
 library(reshape)
+library(shinythemes)
 
 # Extract data from usda.gov
 if(!file.exists("/data/InternationalFoodConsumption.csv")){
@@ -23,16 +24,18 @@ budget <- subset(foodData[which(foodData$Category=='Food budget shares for 114 c
 budgetPivot <- cast(budget,Country ~ CommodityName)
 
 # create UI
-shinyUI(fluidPage(
-    sidebarLayout(
+shinyUI(fluidPage(theme = shinytheme("cerulean"),
+    titlePanel(verbatimTextOutput("dynamicTitle")),
+    sidebarLayout(position = "left",
     sidebarPanel(
         radioButtons("selectCategory", label = "Select a commodity category:",
                      sort(as.vector(
                          unique(budget$CommodityName)
-                     ),decreasing = FALSE))
+                     ),decreasing = FALSE)) 
     )
     ,
     mainPanel(fluidRow(
-        box(title = "Food Budget Shares By Commodity By Country (1996)"
-            , htmlOutput("view"), width = 10)
+        box( htmlOutput("view"), width = 10)
+    ),
+    fluidRow(box(helpText(a("Source: USDA.GOV ", href="http://www.ers.usda.gov/publications/tb-technical-bulletin/tb1925.aspx", width=10)))
     )))))
