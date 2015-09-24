@@ -4,6 +4,7 @@ library(shinydashboard)
 library(googleVis)
 library(reshape)
 library(shinythemes)
+library(knitr)
 
 # Extract data from usda.gov
 if(!file.exists("/data/InternationalFoodConsumption.csv")){
@@ -24,20 +25,35 @@ budget <- subset(foodData[which(foodData$Category=='Food budget shares for 114 c
 budgetPivot <- cast(budget,Country ~ CommodityName)
 
 # create UI
-shinyUI(fluidPage(theme = shinytheme("cerulean"),
-    titlePanel(h3("Percent Of Total Expenditures By Commodity")),
-    sidebarLayout(position = "left",
-    sidebarPanel(
-        radioButtons("selectCategory", label = "Select a commodity category:",
-                     sort(as.vector(
-                         unique(budget$CommodityName)
-                     ),decreasing = FALSE)) 
+shinyUI(navbarPage(
+    "Percent Of Total Expenditures By Commodity",
+    tabPanel(
+        "Interactive",
+        sidebarLayout(
+            position = "left",
+            sidebarPanel(
+  
+                         fluidRow(
+                             radioButtons("selectCategory", label = "Select a commodity category:",
+                                          sort(as.vector(
+                                              unique(budget$CommodityName)
+                                          ),decreasing = FALSE))
+                         ),
+                         fluidRow(" "),
+                         fluidRow(h6("Select the INSTRUCTIONS tab for information on how to use this app"))
+                         )
+            ,
+            mainPanel(
+                fluidRow(verbatimTextOutput("dynamicTitle")),
+                fluidRow(box(htmlOutput("view"), width = 10)),
+                fluidRow(box(helpText(
+                    a("Source: USDA.GOV ", href = "http://www.ers.usda.gov/publications/tb-technical-bulletin/tb1925.aspx", width =
+                          10)
+                )))
+            )
+        )
     )
     ,
-    mainPanel(
-        fluidRow(verbatimTextOutput("dynamicTitle")),
-        fluidRow(
-        box( htmlOutput("view"), width = 10)
-    ),
-    fluidRow(box(helpText(a("Source: USDA.GOV ", href="http://www.ers.usda.gov/publications/tb-technical-bulletin/tb1925.aspx", width=10)))
-    )))))
+    tabPanel("Instructions",
+             mainPanel(includeMarkdown("instructions.md")))
+))

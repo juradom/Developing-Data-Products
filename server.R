@@ -17,23 +17,22 @@ foodData <- read.csv("InternationalFoodConsumption.csv"
 # subset data for Food Budget Shares Only
 budget <- subset(foodData[which(foodData$Category=='Food budget shares for 114 countries'),])
 
-
-
-
 # pivot data
 budgetPivot <- cast(budget,Country ~ CommodityName)
+
+# create server
 shinyServer(function(input, output) {
-    
     datasetInput <- reactive(input$selectCategory)
     
     output$view <- renderGvis(gvisGeoChart(
         budgetPivot, "Country", datasetInput(),
-        options = list(
-            colorAxis = "{colors:['green','yellow','orange','red']}"
-            )
+        options = list(colorAxis = "{colors:['green','yellow','orange','red']}")
     ))
-    output$dynamicTitle <- renderText({paste("Food Budget Shares For"
-                                       ,toupper(input$selectCategory)
-                                       ,"By Country (1996)")})
+    output$dynamicTitle <-
+        renderText({
+            paste("Food Budget Shares For"
+                  ,toupper(input$selectCategory)
+                  ,"By Country (1996)")
+        })
     
 })
