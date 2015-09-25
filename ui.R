@@ -34,7 +34,7 @@ shinyUI(navbarPage(
             sidebarPanel(
   
                          fluidRow(
-                             radioButtons("selectCategory", label = "Select a commodity category:",
+                             radioButtons("selectCategory", label = "Select a food category:",
                                           sort(as.vector(
                                               unique(budget$CommodityName)
                                           ),decreasing = FALSE))
