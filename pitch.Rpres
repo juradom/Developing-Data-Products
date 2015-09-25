@@ -1,9 +1,9 @@
-Coursera Course Pitch: Exploring Commodity Expenditures By Country
+Coursera Course Pitch: Exploring Food Expenditures By Country
 ========================================================
 author: mjurado
 date: Sep 24, 2015
 transition: zoom
-
+font-family: 'Risque'
 
 Summary
 ========================================================
@@ -32,10 +32,40 @@ The source code for this project can be located on [GitHub](https://github.com/j
 
 Data Details
 ========================================================
+```{r echo=FALSE}
+library(reshape)
+
+# read csv
+foodData <- read.csv("InternationalFoodConsumption.csv"
+                     ,header=TRUE
+                     ,na.strings=c("", "NA"))
+
+# subset data for Food Budget Shares Only
+budget <- subset(foodData[which(foodData$Category=='Food budget shares for 114 countries'),])
+
+# pivot data
+budgetPivot <- cast(budget,Country ~ CommodityName)
+
+# create chart
+
+# sort by expenditures
+x <- as.matrix(budgetPivot[order(budgetPivot$`Total food expenditure`),])
+
+#dotchart(budgetPivot$`Total food #expenditure`,labels=budgetPivot$Country,cex=.7,
+#  	main="Total Food Expenditures By Country", 
+#   xlab="% of Total Budget")
+
+barplot(x[,9], main="% of Food Costs To Total Spend", horiz=TRUE,
+  names.arg=budgetPivot$Country, col=budgetPivot$Country)
+
+```
+
+
+References
+========================================================
 
 The data for this Shiny application was obtained through the USDA and leverages the 1996 International Comparison Program (ICP) data.  
 
 The source of the data can be found in a zip file called: [International Food Consumption Patterns](http://www.ers.usda.gov/data-products/international-food-consumption-patterns.aspx#26217).
-
 
 

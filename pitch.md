@@ -1,9 +1,9 @@
-Coursera Course Pitch: Exploring Commodity Expenditures By Country
+Coursera Course Pitch: Exploring Food Expenditures By Country
 ========================================================
 author: mjurado
 date: Sep 24, 2015
 transition: zoom
-
+font-family: 'Risque'
 
 Summary
 ========================================================
@@ -32,10 +32,14 @@ The source code for this project can be located on [GitHub](https://github.com/j
 
 Data Details
 ========================================================
+![plot of chunk unnamed-chunk-1](pitch-figure/unnamed-chunk-1-1.png) 
+
+
+References
+========================================================
 
 The data for this Shiny application was obtained through the USDA and leverages the 1996 International Comparison Program (ICP) data.  
 
 The source of the data can be found in a zip file called: [International Food Consumption Patterns](http://www.ers.usda.gov/data-products/international-food-consumption-patterns.aspx#26217).
-
 
 
