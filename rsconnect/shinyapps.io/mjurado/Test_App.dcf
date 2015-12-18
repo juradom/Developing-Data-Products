@@ -2,8 +2,8 @@ name: Test_App
 account: mjurado
 server: shinyapps.io
 appId: 61289
-bundleId: 273410
+bundleId: 273449
 url: https://mjurado.shinyapps.io/Test_App
-when: 1443143734.38444
+when: 1443150389.65547
 asMultiple: FALSE
 asStatic: FALSE
